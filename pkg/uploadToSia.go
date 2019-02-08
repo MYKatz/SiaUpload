@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/gorilla/mux"
 )
 
 func upload(w http.ResponseWriter, r *http.Request) {
@@ -17,7 +16,7 @@ func upload(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		defer file.Close()
-		pushToSia(file)
+		//pushToSia(file)
 	} else {
 		fmt.Println("Wrong method. Expected POST")
 	}
