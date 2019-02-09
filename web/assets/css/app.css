@@ -33,3 +33,7 @@ body {
 .inputfile + label:hover {
     background-color: red;
 }
+
+#form {
+    width: 100%
+}
