@@ -17,10 +17,12 @@
                 <div class="col-2"></div>
                 <div class="col-8">
                     <div class="d-flex container-fluid justify-content-center">
-                        <form>
+                        <form action="sendFile" method="POST" enctype="multipart/form-data">
                             <div class="form-group">
-                                <input type="file" class="form-control-file inputFile" id="fileUpload">
-                                <label for="fileUpload">Chose a file...</label>
+                                <label class="btn btn-primary btn-block">
+                                    <span id="uploadLabel">Browse</span> <input type="file" class="form-control-file inputFile" id="fileUpload">
+                                </label>
+                                <input type="submit" class="btn btn-primary btn-block" value="upload">
                             </div>
                         </form>
 
@@ -36,6 +38,7 @@
 
     <script src="assets/js/jquery-3.3.1.js"></script>
     <script src="assets/js/bootstrap.js"></script>
+    <script src="assets/js/app.js"></script>
 
 </html>
 
