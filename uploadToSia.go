@@ -1,4 +1,4 @@
-package uploadToSia
+package main
 
 import (
 	"fmt"
