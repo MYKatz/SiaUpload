@@ -28,9 +28,7 @@ func main() {
 		fmt.Printf("Served homepage")
 	})
 
-	r.HandleFunc("/sendFile", func(w http.ResponseWriter, r *http.Request) {
-		//upload to SIA
-	})
+	r.HandleFunc("/sendFile", upload)
 
 	http.ListenAndServe(":80", r)
 }
