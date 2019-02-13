@@ -20,7 +20,8 @@ func upload(w http.ResponseWriter, r *http.Request) {
 		}
 		defer file.Close()
 		//writes file to UUID + ___ + filename in tmp folder
-		out, err := os.Create("./tmp/" + uuid.New().String() + "___" + header.Filename)
+		path := "./tmp/" + uuid.New().String() + "___" + header.Filename
+		out, err := os.Create(path)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
@@ -31,15 +32,30 @@ func upload(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-		fmt.Fprintf(w, "File uploaded successfully")
-		//pushToSia(file)
+		pushToSia(path, w, r)
 	} else {
 		fmt.Println("Wrong method. Expected POST")
 	}
 
 }
 
-func pushToSia(f multipart.File) {
-	fmt.Println("pushing file...")
-	//send file to SIA blockchain
+func pushToSia(p string, w http.ResponseWriter, r *http.Request) {
+	//Sia vars
+	SiaPass := "passwd"
+	SiaPath := "default"
+	//http query - specified by Sia Daemon API - default at localhost:9980
+	query := "localhost:9980/renter/upload/" + SiaPath + "?source=" + p
+	//send file from disk to SIA blockchain
+	resp, err := http.Post(query, "", nil)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	//on success, remove file from tmp folder
+	err = os.Remove(p)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	fmt.Fprintf(w, "Uploaded file successfully")
 }
