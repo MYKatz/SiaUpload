@@ -5,6 +5,7 @@ import (
 	"io"
 	"os"
 	"net/http"
+	"math/rand"
 	"mime/multipart"
 	"github.com/google/uuid"
 )
@@ -58,4 +59,13 @@ func pushToSia(p string, w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	fmt.Fprintf(w, "Uploaded file successfully")
+}
+
+func generateString() string {
+	const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$-_!*+(),"
+	bytearray := make([]byte, rand.Int())
+    for i := range bytearray {
+        bytearray[i] = letters[rand.Intn(len(letters))]
+    }
+    return string(bytearray)
 }
