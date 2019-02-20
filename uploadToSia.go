@@ -8,7 +8,15 @@ import (
 	"math/rand"
 	"mime/multipart"
 	"github.com/google/uuid"
+	"github.com/jinzhu/gorm"
+    _ "github.com/jinzhu/gorm/dialects/sqlite"
 )
+
+type UploadedFile struct {
+	gorm.Model
+	shortName string
+	filePath string
+}
 
 func upload(w http.ResponseWriter, r *http.Request) {
 
