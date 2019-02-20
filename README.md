@@ -14,3 +14,11 @@ These Go Dependencies will also need to be installed:
 
 * github.com/google/uuid
 * github.com/gorilla/mux
+* github.com/jinzhu/gorm
+* github.com/jinzhu/gorm/dialects/sqlite
+
+### Notes on Installation
+
+I'm on Windows, so there were a couple things extra I needed to install. These may help if installation gets a bit screwy.
+
+* http://tdm-gcc.tdragon.net/download - GCC compiler for windows
