@@ -6,7 +6,7 @@ import (
 	"os"
 	"net/http"
 	"math/rand"
-	"mime/multipart"
+	//"mime/multipart"
 	"github.com/google/uuid"
 	"github.com/jinzhu/gorm"
     _ "github.com/jinzhu/gorm/dialects/sqlite"
@@ -16,6 +16,18 @@ type UploadedFile struct {
 	gorm.Model
 	shortName string
 	filePath string
+}
+
+func addToDB(short string, path string) error{
+	db, err := gorm.Open("sqlite3", "files.db")
+	if err != nil {
+		return err
+	}
+	defer db.Close()
+	db.AutoMigrate(&UploadedFile{})
+	//create the entry
+	db.Create(&UploadedFile{shortName: short, filePath: path})
+	return nil
 }
 
 func upload(w http.ResponseWriter, r *http.Request) {
@@ -49,6 +61,8 @@ func upload(w http.ResponseWriter, r *http.Request) {
 }
 
 func pushToSia(p string, w http.ResponseWriter, r *http.Request) {
+	//temporary placement of this function to test some things while I figure out why Siad isn't working.
+	addToDB("lima", p)
 	//Sia vars
 	SiaPass := "passwd"
 	SiaPath := "default"
@@ -66,7 +80,7 @@ func pushToSia(p string, w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	fmt.Fprintf(w, "Uploaded file successfully")
+	fmt.Fprintf(w, "Uploaded file successfully", SiaPass, resp)
 }
 
 func generateString() string {
