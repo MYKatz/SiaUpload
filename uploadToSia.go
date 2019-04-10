@@ -24,9 +24,11 @@ func addToDB(short string, path string) error{
 		return err
 	}
 	defer db.Close()
+	file := UploadedFile{shortName: short, filePath: path}
 	db.AutoMigrate(&UploadedFile{})
 	//create the entry
-	db.Create(&UploadedFile{shortName: short, filePath: path})
+	db.Create(&file)
+	fmt.Println(file.shortName)
 	return nil
 }
 
